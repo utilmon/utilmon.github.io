@@ -1,12 +1,7 @@
 github_users:
-  - torvalds
-  - alshedivat
+  - utilmon
+  # - alshedivat
 
 github_repos:
-  - alshedivat/al-folio
-  - twbs/bootstrap
-  - jekyll/jekyll
-  - jquery/jquery
-  - FortAwesome/Font-Awesome
-  - jpswalsh/academicons
-  - mathjax/MathJax
+  - utilmon/EasyIB
+  - utilmon/youtube-music-autouploader
