@@ -24,13 +24,21 @@
   },
   "work": [
     {
-      "name": "Institute for Advanced Study, Princeton University",
-      "position": "Professor of Theoretical Physics",
+      "name": "Samsung Electronics",
+      "position": "Staff Engineer",
       "url": "https://example.com",
-      "startDate": "1933-01-01",
-      "endDate": "1955-01-01",
-      "summary": "Teaching at Palmer Physical Laboratory (now 302 Frist Campus Center). While not a professor at Princeton, I associated with the physics professors and continued to give lectures on campus.",
-      "highlights": ["Relativity"]
+      "startDate": "2023",
+      "endDate": "Present",
+      "summary": "Developing image processing algorithms for semiconductor chip failure analysis. Convolutional neural network (CNN) machine learning models and traditional computer vision models were deployed and maintained to analyze SEM (scanning electron microscopy) and TEM (transmission electron microscopy) images.",
+      "highlights": ["Computer Vision", "Image Processing"]
+    },
+    {
+      "name": "Cornell University",
+      "position": "Research Assistant",
+      "startDate": "2016",
+      "endDate": "2022",
+      "summary": "Imporved Photocathode lifetime with unconventional CVD activation methods and studied photoemission processes with various simulation methods",
+      "highlights": ["Condensed Matter Physics", "Accelerator Physics"]
     }
   ],
   // "volunteer": [
