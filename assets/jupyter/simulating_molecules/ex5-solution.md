@@ -1,15 +1,14 @@
-# Exercise 5  - Variational quantum eigensolver  solution
+# Exercise 5 - Variational quantum eigensolver solution
 
 **Created by:** Igor O. Sokolov
 
 This notebook provides a concise description of the logical steps required to obtain the solution without
 the theoretical details. For the latter, refer to the original `ex5` notebook that contains the links to the resources.
 
-## Solution for Part 1 : Tutorial - VQE for H$_2$ molecule 
+## Solution for Part 1 : Tutorial - VQE for H$_2$ molecule
 
-In this part, you will simulate H$_2$ molecule using the STO-3G basis with the PySCF driver and Jordan-Wigner mapping. 
+In this part, you will simulate H$_2$ molecule using the STO-3G basis with the PySCF driver and Jordan-Wigner mapping.
 Let's use the code from the tutorial (see the original notebook) to answer the basic questions about the molecule.
-
 
 ```python
 # Classical HF computation
@@ -25,38 +24,31 @@ The driver will execute the HF calculation. Knowing that each hydrogen atom has 
 
 <div class="alert alert-block alert-danger">
 
-<b>Questions</b> 
-    
+<b>Questions</b>
+
 Look into the attributes of `qmolecule` and answer the questions below.
 
-    
 1. We need to know the basic characteristics of our molecule. What is the total number of electrons in your system?
 2. What is the number of molecular orbitals?
 3. What is the number of spin-orbitals?
-3. How many qubits would you need to simulate this molecule with Jordan-Wigner mapping?
+4. How many qubits would you need to simulate this molecule with Jordan-Wigner mapping?
 5. What is the value of the nuclear repulsion energy?
-    
+
 </div>
 
 </div>
 
 <div class="alert alert-block alert-success">
 
-<b>Answers </b> 
+<b>Answers </b>
 
 1. `n_el = qmolecule.num_alpha + qmolecule.num_beta`
-    
 2. `n_mo = qmolecule.num_molecular_orbitals`
-    
 3. `n_so = 2 * qmolecule.num_molecular_orbitals`
-    
 4. `n_q = n_so`
-    
 5. `e_nn = qmolecule.nuclear_repulsion_energy`
-    
-    
-</div>
 
+</div>
 
 ```python
 n_el = qmolecule.num_alpha + qmolecule.num_beta
@@ -68,7 +60,7 @@ e_nn = qmolecule.nuclear_repulsion_energy
 print("1. Number of electrons: {}".format(n_el))
 print("2. Number of molecular orbitals: {}".format(n_mo))
 print("3. Number of spin-orbitals: {}".format(n_so))
-print("4. Number of qubits: {}".format(n_q)) 
+print("4. Number of qubits: {}".format(n_q))
 print("5. Nuclear repulsion energy: {}".format(e_nn))
 ```
 
@@ -78,17 +70,15 @@ print("5. Nuclear repulsion energy: {}".format(e_nn))
     4. Number of qubits: 4
     5. Nuclear repulsion energy: 0.7160720039512857
 
-
-Indeed, we have 2 MOs. Considering the spin component of each orbital, we have 4 spin-orbitals. Hence, we need only 4 qubits which is easily diagonalizable (i.e. $2^4$ x $2^4$ Hamiltonian matrix). 
+Indeed, we have 2 MOs. Considering the spin component of each orbital, we have 4 spin-orbitals. Hence, we need only 4 qubits which is easily diagonalizable (i.e. $2^4$ x $2^4$ Hamiltonian matrix).
 Let's write our exact diagonalization code to obtain the target energy that we should obtain with VQE.
 
-
 ```python
-# Generate the second-quantized operators 
+# Generate the second-quantized operators
 
 from qiskit_nature.problems.second_quantization.electronic import ElectronicStructureProblem
 problem = ElectronicStructureProblem(driver)
-second_q_ops = problem.second_q_ops() 
+second_q_ops = problem.second_q_ops()
 main_op = second_q_ops[0]
 
 from qiskit_nature.mappers.second_quantization import ParityMapper, BravyiKitaevMapper, JordanWignerMapper
@@ -111,7 +101,7 @@ converter = QubitConverter(mapper=mapper, two_qubit_reduction=False)
 
 from qiskit_nature.algorithms.ground_state_solvers.minimum_eigensolver_factories import NumPyMinimumEigensolverFactory
 from qiskit_nature.algorithms.ground_state_solvers import GroundStateEigensolver
-import numpy as np 
+import numpy as np
 
 def exact_diagonalizer(problem, converter):
     solver = NumPyMinimumEigensolverFactory()
@@ -127,32 +117,30 @@ print(result_exact)
 
     Exact electronic energy -1.8533636186720375
     === GROUND STATE ENERGY ===
-     
+
     * Electronic ground state energy (Hartree): -1.853363618672
       - computed part:      -1.853363618672
     ~ Nuclear repulsion energy (Hartree): 0.716072003951
     > Total ground state energy (Hartree): -1.137291614721
-     
+
     === MEASURED OBSERVABLES ===
-     
+
       0:  # Particles: 2.000 S: 0.000 S^2: 0.000 M: 0.000
-     
+
     === DIPOLE MOMENTS ===
-     
+
     ~ Nuclear dipole moment (a.u.): [0.0  0.0  1.39650761]
-     
-      0: 
+
+      0:
       * Electronic dipole moment (a.u.): [0.0  0.0  1.39650761]
         - computed part:      [0.0  0.0  1.39650761]
       > Dipole moment (a.u.): [0.0  0.0  0.0]  Total: 0.
                      (debye): [0.0  0.0  0.00000001]  Total: 0.00000001
-     
 
 
 Now we know the `Electronic ground state energy` that we need to target ($E_0 = -1.8533$ Ha) with our VQE simulation. This is of course not usually available for large systems where the exact diagonalization becomes impossible.
 
 Now we recycle the code that performs the VQE and run it with different predefined ansatzes.
-
 
 ```python
 # The fermionic operators are mapped to qubit operators
@@ -188,13 +176,13 @@ if ansatz_type == "TwoLocal":
     rotation_blocks = ['ry']
     # Entangling gates
     entanglement_blocks = 'cx'
-    # How the qubits are entangled 
+    # How the qubits are entangled
     entanglement = 'linear'
     # Repetitions of rotation_blocks + entanglement_blocks with independent parameters
     repetitions = 1
     # Skip the final rotation_blocks layer
     skip_final_rotation_layer = False
-    ansatz = TwoLocal(qubit_op.num_qubits, rotation_blocks, entanglement_blocks, reps=repetitions, 
+    ansatz = TwoLocal(qubit_op.num_qubits, rotation_blocks, entanglement_blocks, reps=repetitions,
                       entanglement=entanglement, skip_final_rotation_layer=skip_final_rotation_layer)
     # Add the initial state
     ansatz.compose(init_state, front=True, inplace=True)
@@ -235,7 +223,7 @@ from qiskit.algorithms.optimizers import COBYLA, L_BFGS_B, SPSA, SLSQP
 
 optimizer_type = 'COBYLA'
 
-# You may want to tune the parameters 
+# You may want to tune the parameters
 # of each optimizer, here the defaults are used
 if optimizer_type == 'COBYLA':
     optimizer = COBYLA(maxiter=500)
@@ -247,12 +235,12 @@ elif optimizer_type == 'SLSQP':
     optimizer = SLSQP(maxiter=500)
 
 # Run VQE
-    
+
 from qiskit.algorithms import VQE
 from IPython.display import display, clear_output
 
 # Print and save the data in lists
-def callback(eval_count, parameters, mean, std):  
+def callback(eval_count, parameters, mean, std):
     # Overwrites the same line when printing
     display("Evaluation: {}, Energy: {}, Std: {}".format(eval_count, mean, std))
     clear_output(wait=True)
@@ -267,7 +255,7 @@ params = []
 deviation = []
 
 # Set initial parameters of the ansatz
-# We choose a fixed small displacement 
+# We choose a fixed small displacement
 # So all participants start from similar starting point
 try:
     initial_point = [0.01] * len(ansatz.ordered_parameters)
@@ -312,8 +300,6 @@ print(result)
                     ('optimal_value', -1.853338265379357),
                     ('optimizer_evals', 500),
                     ('optimizer_time', 3.1102261543273926)])
-
-
 
 ```python
 # Store results in a dictionary
@@ -409,9 +395,6 @@ result_df[['optimizer','ansatz', '# of qubits', '# of parameters','rotation bloc
     'entanglement', 'repetitions', 'error (mHa)', 'pass', 'score']]
 ```
 
-
-
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -425,6 +408,7 @@ result_df[['optimizer','ansatz', '# of qubits', '# of parameters','rotation bloc
     .dataframe thead th {
         text-align: right;
     }
+
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -462,13 +446,7 @@ result_df[['optimizer','ansatz', '# of qubits', '# of parameters','rotation bloc
 </table>
 </div>
 
-
-
-
-    
 ![png](ex5-solution_files/ex5-solution_9_1.png)
-    
-
 
 We can see the energy evolution with the number of iterations of a given optimizer (`COBYLA`).
 For this simple problem, `COBYLA` is sufficient to converge to the correct state.
@@ -478,18 +456,18 @@ Next, let's run the VQE again and answer the following questions.
 
 <div class="alert alert-block alert-danger">
     
-<b>Questions 2</b> 
+<b>Questions 2</b>
 
 Experiment with all the parameters and then:
 
 1. Can you find your best (best score) heuristic ansatz (by modifying parameters of `TwoLocal` ansatz) and optimizer?
 2. Can you find your best q-UCC ansatz (choose among `UCCSD, PUCCD or SUCCD` ansatzes) and optimizer?
-3. In the cell where we define the ansatz, 
-   can you modify the `Custom` ansatz by placing gates yourself to write a better circuit than your `TwoLocal` circuit? 
+3. In the cell where we define the ansatz,
+   can you modify the `Custom` ansatz by placing gates yourself to write a better circuit than your `TwoLocal` circuit?
 
 For each question, give `ansatz` objects.
 Remember, you have to reach the chemical accuracy $|E_{exact} - E_{VQE}| \leq 0.004 $ Ha $= 4$ mHa.
-    
+
 </div>
 
 </div>
@@ -503,22 +481,19 @@ Remember, you have to reach the chemical accuracy $|E_{exact} - E_{VQE}| \leq 0.
     entanglement = 'linear'
     repetitions = 1
     skip_final_rotation_layer = False
-    
-**Answer to question 2:** find the best `UCC` ansatz. To this end, it is also intelligent to start with the shortest possible Ansatz. The `UCCSD` ansatz includes the single excitations and therefore is already longer than `PUCCD` and `SUCCD` that do not include them. The `PUCCD` ansatz uses only pair electron double excitations. The `SUCCD` includes not only the pair but singlet type excitations also (see the tutorial) so in general `PUCCD` is shortest. In this case, `PUCCD` and `SUCCD` are the same (identical pair double excitation) and both produce sufficiently accurate results. 
+
+**Answer to question 2:** find the best `UCC` ansatz. To this end, it is also intelligent to start with the shortest possible Ansatz. The `UCCSD` ansatz includes the single excitations and therefore is already longer than `PUCCD` and `SUCCD` that do not include them. The `PUCCD` ansatz uses only pair electron double excitations. The `SUCCD` includes not only the pair but singlet type excitations also (see the tutorial) so in general `PUCCD` is shortest. In this case, `PUCCD` and `SUCCD` are the same (identical pair double excitation) and both produce sufficiently accurate results.
 
     ansatz_type = "PUCCD" # or "SUCCD"
-    
-**Answer to question 3:** find the best `Custom` ansatz. In this case, it is identical to the best `TwoLocal` ansatz. 
-    
+
+**Answer to question 3:** find the best `Custom` ansatz. In this case, it is identical to the best `TwoLocal` ansatz.
+
 </div>
 
-
-# Solution for Part 2: Final Challenge - VQE for LiH molecule 
-
+# Solution for Part 2: Final Challenge - VQE for LiH molecule
 
 In this part, you will simulate LiH molecule using the STO-3G basis with the PySCF driver.
 Let's now run the Hartree-Fock calculation.
-
 
 ```python
 from qiskit_nature.drivers import PySCFDriver
@@ -529,7 +504,6 @@ qmolecule = driver.run()
 ```
 
 Let's first check how many qubits we need for the simulation of this molecule.
-
 
 ```python
 n_el = qmolecule.num_alpha + qmolecule.num_beta
@@ -551,20 +525,18 @@ print("Nuclear repulsion energy: {}".format(e_nn))
     Number of qubits: 12
     Nuclear repulsion energy: 1.0259348796432726
 
-
 As H atom has 1 electron being in 1s molecular orbitals and Li atom has 3 electrons in 1s, 2s and 2p (with $x,y,z$ components) molecular orbitals. This means that we have 1 + 5 = 6 molecular orbitals in total and therefore 12 spin-orbitals when we consider their spin up and spin down components.
-So, as in Jordan-Wigner mapping we represent each spin-orbital as a qubit, we would need 12 qubits. 
+So, as in Jordan-Wigner mapping we represent each spin-orbital as a qubit, we would need 12 qubits.
 We could in principle construct the Hamiltonian for this problem and compute the ground state.
-But, one can find ways to reduce the dimensionality of the problem. 
+But, one can find ways to reduce the dimensionality of the problem.
 In turn, this will reduce the ansatz space to explore, rendering a simpler solution (i.e. lower number of CNOTs).
 
-
 ```python
-# Generate the second-quantized operators 
+# Generate the second-quantized operators
 
 from qiskit_nature.problems.second_quantization.electronic import ElectronicStructureProblem
 problem = ElectronicStructureProblem(driver)
-second_q_ops = problem.second_q_ops() 
+second_q_ops = problem.second_q_ops()
 main_op = second_q_ops[0]
 
 from qiskit_nature.mappers.second_quantization import ParityMapper, BravyiKitaevMapper, JordanWignerMapper
@@ -587,7 +559,7 @@ converter = QubitConverter(mapper=mapper, two_qubit_reduction=False)
 
 from qiskit_nature.algorithms.ground_state_solvers.minimum_eigensolver_factories import NumPyMinimumEigensolverFactory
 from qiskit_nature.algorithms.ground_state_solvers import GroundStateEigensolver
-import numpy as np 
+import numpy as np
 
 def exact_diagonalizer(problem, converter):
     solver = NumPyMinimumEigensolverFactory()
@@ -603,41 +575,38 @@ print(result_exact)
 
     Exact electronic energy -8.908697116424248
     === GROUND STATE ENERGY ===
-     
+
     * Electronic ground state energy (Hartree): -8.908697116424
       - computed part:      -8.908697116424
     ~ Nuclear repulsion energy (Hartree): 1.025934879643
     > Total ground state energy (Hartree): -7.882762236781
-     
+
     === MEASURED OBSERVABLES ===
-     
+
       0:  # Particles: 4.000 S: 0.000 S^2: 0.000 M: 0.000
-     
+
     === DIPOLE MOMENTS ===
-     
+
     ~ Nuclear dipole moment (a.u.): [0.0  0.0  2.92416221]
-     
-      0: 
+
+      0:
       * Electronic dipole moment (a.u.): [0.0  0.0  4.74455828]
         - computed part:      [0.0  0.0  4.74455828]
       > Dipole moment (a.u.): [0.0  0.0  -1.82039607]  Total: 1.82039607
                      (debye): [0.0  0.0  -4.62698485]  Total: 4.62698485
-     
 
 
-The energy we shall target is $ -8.9086$ Ha. 
+The energy we shall target is $ -8.9086$ Ha.
 
-We can now use the functionalities of Qiskit to reduce the number of qubits. 
+We can now use the functionalities of Qiskit to reduce the number of qubits.
 As we know the energy that we should obtain from the original Hamiltonian, we can verify that, after massaging the Hamiltonian, we still get the correct energies.
 As suggested, there are three possibilities that can be used simultaneously:
 
-- freeze the core electrons that do not contribute significantly to chemistry and consider only the valence electrons. Qiskit  already has this functionality implemented. So inspect the different transformers in `qiskit_nature.transformers`  and find the one that performs the freeze core approximation.
+- freeze the core electrons that do not contribute significantly to chemistry and consider only the valence electrons. Qiskit already has this functionality implemented. So inspect the different transformers in `qiskit_nature.transformers` and find the one that performs the freeze core approximation.
 - use `ParityMapper` with `two_qubit_reduction=True` to eliminate 2 qubits.
 - reduce the number of qubits by inspecting the symmetries of your Hamiltonian. Find a way to use `Z2Symmetries` in Qiskit.
 
-The elimination of 2 qubits results from the fact that the Hamiltonian commutes with the spin-up and spin-down number operators. For each symmetry (2 here), one can eliminate a qubit. This is part of the tapering procedure and details are given in [Bravyi *et al*, 2017](https://arxiv.org/abs/1701.08213v1).
-
-
+The elimination of 2 qubits results from the fact that the Hamiltonian commutes with the spin-up and spin-down number operators. For each symmetry (2 here), one can eliminate a qubit. This is part of the tapering procedure and details are given in [Bravyi _et al_, 2017](https://arxiv.org/abs/1701.08213v1).
 
 ```python
 from qiskit_nature.problems.second_quantization.electronic import ElectronicStructureProblem
@@ -685,9 +654,7 @@ print("Number of qubits: ", qubit_op.num_qubits)
 
     Number of qubits:  6
 
-
-Using the automatic symmetry-based reduction `z2symmetry_reduction="auto"` we can reduce an 8 qubit problem (parity mapping with two qubit reduction and frozen core approximation) to a 6 qubit problem. 
-
+Using the automatic symmetry-based reduction `z2symmetry_reduction="auto"` we can reduce an 8 qubit problem (parity mapping with two qubit reduction and frozen core approximation) to a 6 qubit problem.
 
 ```python
 result_exact = exact_diagonalizer(problem, converter)
@@ -698,28 +665,27 @@ print(result_exact)
 
     Exact electronic energy -1.0897823963487385
     === GROUND STATE ENERGY ===
-     
+
     * Electronic ground state energy (Hartree): -8.90847269193
       - computed part:      -1.089782396349
       - FreezeCoreTransformer extracted energy part: -7.818690295581
     ~ Nuclear repulsion energy (Hartree): 1.025934879643
     > Total ground state energy (Hartree): -7.882537812287
-     
+
     === MEASURED OBSERVABLES ===
-     
+
       0:  # Particles: 2.000 S: 0.000 S^2: 0.000 M: 0.000
-     
+
     === DIPOLE MOMENTS ===
-     
+
     ~ Nuclear dipole moment (a.u.): [0.0  0.0  2.92416221]
-     
-      0: 
+
+      0:
       * Electronic dipole moment (a.u.): [None  None  4.74515931]
         - computed part:      [None  None  4.74910617]
         - FreezeCoreTransformer extracted energy part: [0.0  0.0  -0.00394686]
       > Dipole moment (a.u.): [None  None  -1.8209971]  Total: 1.8209971
                      (debye): [None  None  -4.62851252]  Total: 4.62851252
-     
 
 
 The exact energy has not changed after the transformation of `qubit_op`.
@@ -728,11 +694,10 @@ However, here, a more intelligent solution is possible.
 As pointed out by many of our participants, one can use some chemistry knowledge to eliminate molecular orbitals.
 There is actually a paper by [K. Setia et al.](https://arxiv.org/pdf/1910.14644.pdf) showing that the knowledge of molecular symmetries allows to reduce the number of qubits further than what is possible by the default with tapering.
 
-The LiH has a symmetry along z-axis. 
-The Li 1s orbital has core electrons that can be frozen as they do not participate in bonding. 
+The LiH has a symmetry along z-axis.
+The Li 1s orbital has core electrons that can be frozen as they do not participate in bonding.
 In the ground state of this molecule the electrons from H 1s and Li 2s orbitals mostly interact with some mixing with 2$p_z$ due to the orientation of the molecule.
 Therefore, we may try to eliminate the corresponding orbitals by using the `FreezeCoreTransformer`.
-
 
 ```python
 from qiskit_nature.problems.second_quantization.electronic import ElectronicStructureProblem
@@ -781,8 +746,6 @@ print("Number of qubits: ", qubit_op.num_qubits)
 
     Number of qubits:  4
 
-
-
 ```python
 result_exact = exact_diagonalizer(problem, converter)
 exact_energy = np.real(result_exact.eigenenergies[0])
@@ -791,12 +754,10 @@ print("Exact electronic energy", exact_energy)
 
     Exact electronic energy -1.0887060157347392
 
-
 One can check that when activating the tapering with `symmetries = True` we cannot further eliminate any qubits.
-We see that by eliminating the orbitals 2$p_x$ and 2$p_y$, we obtain $-1.0887$ Ha instead of $-1.0897$ Ha. An error of 1 mHa and considering the required accuracy of 4 mHa in this challenge, it is acceptable. 
+We see that by eliminating the orbitals 2$p_x$ and 2$p_y$, we obtain $-1.0887$ Ha instead of $-1.0897$ Ha. An error of 1 mHa and considering the required accuracy of 4 mHa in this challenge, it is acceptable.
 
 Create the Hartree-Fock state for this problem.
-
 
 ```python
 from qiskit_nature.circuit.library import HartreeFock
@@ -808,9 +769,6 @@ init_state = HartreeFock(num_spin_orbitals, num_particles, converter)
 init_state.draw()
 ```
 
-
-
-
 <pre style="word-wrap: normal;white-space: pre;background: #fff0;line-height: 1.1;font-family: &quot;Courier New&quot;,Courier,monospace">     ┌───┐
 q_0: ┤ X ├
      ├───┤
@@ -821,10 +779,7 @@ q_2: ─────
 q_3: ─────
           </pre>
 
-
-
 Start with a simplest circuit that corresponds to `TwoLocal` with linear entanglement, a single layer of entanglers and final rotations (`ansatz 1`).
-
 
 ```python
 # ansatz 1
@@ -872,9 +827,6 @@ ansatz.draw()
 # ansatz.draw()
 ```
 
-
-
-
 <pre style="word-wrap: normal;white-space: pre;background: #fff0;line-height: 1.1;font-family: &quot;Courier New&quot;,Courier,monospace">           ┌───┐      ┌───────────────┐     ┌───────────────┐                 »
 q_0: ──────┤ X ├──────┤ RY(ry_angle1) ├──■──┤ RY(ry_angle5) ├─────────────────»
            ├───┤      ├───────────────┤┌─┴─┐└───────────────┘┌───────────────┐»
@@ -894,10 +846,7 @@ q_3: ┤ RY(ry_angle4) ├──────────────────
 «q_3: ┤ RY(ry_angle8) ├
 «     └───────────────┘</pre>
 
-
-
 Run the VQE.
-
 
 ```python
 from qiskit import Aer
@@ -911,7 +860,7 @@ from qiskit.algorithms import VQE
 from IPython.display import display, clear_output
 
 # Print and save the data in lists
-def callback(eval_count, parameters, mean, std):  
+def callback(eval_count, parameters, mean, std):
     # Overwrites the same line when printing
     display("Evaluation: {}, Energy: {}, Std: {}".format(eval_count, mean, std))
     clear_output(wait=True)
@@ -926,7 +875,7 @@ params = []
 deviation = []
 
 # Set initial parameters of the ansatz
-# We choose a fixed small displacement 
+# We choose a fixed small displacement
 # So all participants start from similar starting point
 try:
     initial_point = [0.01] * len(ansatz.ordered_parameters)
@@ -971,8 +920,6 @@ print(result)
                     ('optimal_value', -1.0863669627133823),
                     ('optimizer_evals', 382),
                     ('optimizer_time', 2.487271785736084)])
-
-
 
 ```python
 # Store results in a dictionary
@@ -1067,9 +1014,6 @@ result_df.to_csv(filename)
 result_df[['optimizer','ansatz', '# of qubits', 'error (mHa)', 'pass', 'score']]
 ```
 
-
-
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1083,6 +1027,7 @@ result_df[['optimizer','ansatz', '# of qubits', 'error (mHa)', 'pass', 'score']]
     .dataframe thead th {
         text-align: right;
     }
+
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -1110,13 +1055,7 @@ result_df[['optimizer','ansatz', '# of qubits', 'error (mHa)', 'pass', 'score']]
 </table>
 </div>
 
-
-
-
-    
 ![png](ex5-solution_files/ex5-solution_32_1.png)
-    
-
 
 For example, two solutions are possible here. Due to the simplification of the Hamiltonian, the solution is a simple `RY` ansatz with linear entanglement (`ansatz 1`). The `ansatz 1` has lower number of single qubit rotations than `ansatz 2` which simplifies the classical optimization. However, it is 0.35 mHa worse than `ansatz 2` in terms of accuracy.
 The target energy is $-1.0897$ Ha and the one obtained with VQE is $-1.0863$ Ha which is withing 4 mHa required to pass.
