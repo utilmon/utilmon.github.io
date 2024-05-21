@@ -137,7 +137,6 @@ print(result_exact)
       > Dipole moment (a.u.): [0.0  0.0  0.0]  Total: 0.
                      (debye): [0.0  0.0  0.00000001]  Total: 0.00000001
 
-
 Now we know the `Electronic ground state energy` that we need to target ($E_0 = -1.8533$ Ha) with our VQE simulation. This is of course not usually available for large systems where the exact diagonalization becomes impossible.
 
 Now we recycle the code that performs the VQE and run it with different predefined ansatzes.
@@ -595,7 +594,6 @@ print(result_exact)
       > Dipole moment (a.u.): [0.0  0.0  -1.82039607]  Total: 1.82039607
                      (debye): [0.0  0.0  -4.62698485]  Total: 4.62698485
 
-
 The energy we shall target is $ -8.9086$ Ha.
 
 We can now use the functionalities of Qiskit to reduce the number of qubits.
@@ -686,7 +684,6 @@ print(result_exact)
         - FreezeCoreTransformer extracted energy part: [0.0  0.0  -0.00394686]
       > Dipole moment (a.u.): [None  None  -1.8209971]  Total: 1.8209971
                      (debye): [None  None  -4.62851252]  Total: 4.62851252
-
 
 The exact energy has not changed after the transformation of `qubit_op`.
 
