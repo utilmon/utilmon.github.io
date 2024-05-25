@@ -49,13 +49,23 @@ Let us consider a portfolio optimization problem where you have a total of four 
 
 How can we formulate this problem?<br> The function which describes the efficient frontier can be formulated into a quadratic program with linear constraints as shown below. <br> The terms that are marked in red are associated with risks and the terms in blue are associated with returns. You can see that our goal is to minimize the tradeoff between risk and return. In general, the function we want to optimize is called an objective function. <br> <br>
 
-<div align="center"> <font size=5em >$\\min\_{x \\in \\{0, 1\\}^n}: $</font> <font color='red', size=5em >$q x^n\\Sigma x$</font> - <font color='blue', size=5em>$\\mu^n x$</font> </div> <div align="center"> <font size=5em >$subject$</font> <font size=5em >$to: 1^n x = B$</font> </div>
-* <font size=4em >$x$</font> indicates asset allocation.
-* <font size=4em >$Σ$</font> (sigma) is a covariance matrix. A covariance matrix is a useful math concept that is widely applied in financial engineering. It is a statistical measure of how two asset prices are varying with respect to each other. When the covariance between two stocks is high, it means that one stock experiences heavy price movements and is volatile if the price of the other stock changes.
-* <font size=4em >$q$</font> is called a risk factor (risk tolerance), which is an evaluation of an individual's willingness or ability to take risks. For example, when you use the automated financial advising services, the so-called robo-advising, you will usually see different risk tolerance levels. This q value is the same as such and takes a value between 0 and 1.
-* <font size=4em >$𝝁$</font> (mu) is the expected return and is something we obviously want to maximize.
-* <font size=4em >$n$</font> is the number of different assets we can choose from
-* <font size=4em >$B$</font> stands for Budget. And budget in this context means the number of assets we can allocate in our portfolio.
+<!-- <div align="center"> <font size=5em >$\\min\_{x \\in \\{0, 1\\}^n}: $</font> <font color='red', size=5em >$q x^n\\Sigma x$</font> - <font color='blue', size=5em>$\\mu^n x$</font> </div> <div align="center"> <font size=5em >$subject$</font> <font size=5em >$to: 1^n x = B$</font> </div> -->
+<!-- <div align="center"> <font size=5em >$$\min_{x \in \{0, 1\}^n}: $$</font> $$q x^n\Sigma x$$ - $$\mu^n x$$ </div> <div align="center"> <font size=5em >$$subject$$</font> <font size=5em >$$to: 1^n x = B$$</font> </div> -->
+
+$$
+\min_{x \in \{0, 1\}^n}: q x^n\Sigma x - \mu ^n x
+$$
+
+$$
+subject \ to: 1^n x = B
+$$
+
+- <font size=4em >x</font> indicates asset allocation.
+- <font size=4em >Σ</font> (sigma) is a covariance matrix. A covariance matrix is a useful math concept that is widely applied in financial engineering. It is a statistical measure of how two asset prices are varying with respect to each other. When the covariance between two stocks is high, it means that one stock experiences heavy price movements and is volatile if the price of the other stock changes.
+- <font size=4em >q</font> is called a risk factor (risk tolerance), which is an evaluation of an individual's willingness or ability to take risks. For example, when you use the automated financial advising services, the so-called robo-advising, you will usually see different risk tolerance levels. This q value is the same as such and takes a value between 0 and 1.
+- <font size=4em >𝝁</font> (mu) is the expected return and is something we obviously want to maximize.
+- <font size=4em >n</font> is the number of different assets we can choose from
+- <font size=4em >B</font> stands for Budget. And budget in this context means the number of assets we can allocate in our portfolio.
 
 #### Goal:
 
@@ -66,8 +76,8 @@ Our goal is to find the **x** value. The x value here indicates which asset to p
 We assume the following simplifications:
 
 - all assets have the same price (normalized to 1),
-- the full budget $B$ has to be spent, i.e. one has to select exactly $B$ assets.
-- the equality constraint $1^n x = B$ is mapped to a penalty term $(1^n x - B)^2$ which is scaled by a parameter and subtracted from the objective function.
+- the full budget $$B$$ has to be spent, i.e. one has to select exactly $$B$$ assets.
+- the equality constraint $$1^n x = B$$ is mapped to a penalty term $$(1^n x - B)^2$$ which is scaled by a parameter and subtracted from the objective function.
 
 ## Step 1. Import necessary libraries
 

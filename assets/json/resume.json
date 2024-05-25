@@ -75,7 +75,7 @@
       "location": "NY, USA",
       "url": "https://www.cornell.edu/",
       "area": "Physics",
-      "studyType": "PhD",
+      "studyType": "PhD & MS",
       "startDate": "2016",
       "endDate": "2022",
       "score": "10",
@@ -211,8 +211,8 @@
   "projects": [
     {
       "name": "EasyIB",
-      "summary": "Built a python wrapper for a stock/option trading broker API (Interactive Brokers). This project has recorded 75 stars on GitHub and 1000s of downloads on PyPI.",
-      "highlights": ["75 stars", "1000s of Downloads"],
+      "summary": "Built a python wrapper for a stock/option trading broker API (Interactive Brokers). This project has recorded 79 stars on GitHub and 1000s of downloads on PyPI.",
+      "highlights": ["79 stars", "1000s of Downloads"],
       "startDate": "2021",
       "endDate": "2023",
       "url": "https://github.com/utilmon/EasyIB"
