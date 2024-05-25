@@ -498,7 +498,7 @@ qp2 = portfolio2.to_quadratic_program()
 
 ## Step 6: Let's solve the problem using QAOA
 
-**Quantum Approximate Optimization Algorithm (QAOA)** is another variational algorithm that has applications for solving combinatorial optimization problems on near-term quantum systems. This algorithm can also be used to calculate ground states of a Hamiltonian and can be easily implemented by using Qiskit's [**QAOA**](https://qiskit.org/documentation/stubs/qiskit.algorithms.QAOA.html) application. (You will get to learn about QAOA in detail in challenge 4. Let us first focus on the basic implementation of QAOA using Qiskit in this exercise.)
+**Quantum Approximate Optimization Algorithm (QAOA)** is another variational algorithm that has applications for solving combinatorial optimization problems on near-term quantum systems. This algorithm can also be used to calculate ground states of a Hamiltonian and can be easily implemented by using Qiskit's **QAOA** application. (You will get to learn about QAOA in detail in challenge 4. Let us first focus on the basic implementation of QAOA using Qiskit in this exercise.)
 
 ```python
 # Step 6. Now let's use QAOA to solve this problem.

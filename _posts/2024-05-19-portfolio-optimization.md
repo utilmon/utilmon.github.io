@@ -230,7 +230,7 @@ The optimal value indicates your asset allocation.
 
 ## Solution using VQE
 
-**Variational Quantum Eigensolver (VQE)** is a classical-quantum hybrid algorithm which outsources some of the processing workload to a classical computer to efficiently calculate the ground state energy (lowest energy) of a [**Hamiltonian**](<https://en.wikipedia.org/wiki/Hamiltonian_(quantum_mechanics)>). As we discussed earlier, we can reformulate the quadratic program as a ground state energy search to be solved by [**VQE**](https://qiskit.org/documentation/stubs/qiskit.algorithms.VQE.html) where the ground state corresponds to the optimal solution we are looking for.
+**Variational Quantum Eigensolver (VQE)** is a classical-quantum hybrid algorithm which outsources some of the processing workload to a classical computer to efficiently calculate the ground state energy (lowest energy) of a [**Hamiltonian**](<https://en.wikipedia.org/wiki/Hamiltonian_(quantum_mechanics)>). As we discussed earlier, we can reformulate the quadratic program as a ground state energy search to be solved by **VQE** where the ground state corresponds to the optimal solution we are looking for.
 
 Here is an example implementation of VQE using the two-local circuit. The two-local circuit is a parameterized circuit consisting of alternating rotation layers and entanglement layers. The rotation layers are single qubit gates applied on all qubits. The entanglement layer uses two-qubit gates to entangle the qubits. Here, we use Ry gates (i.e. 'ry') for the rotational blocks and controlled-Z gates (i.e. 'cz') for the entanglement blocks in our parameterized circuit.
 
@@ -275,7 +275,7 @@ qp2 = portfolio2.to_quadratic_program()
 
 ## Solution using QAOA
 
-**Quantum Approximate Optimization Algorithm (QAOA)** is another variational algorithm that has applications for solving combinatorial optimization problems on near-term quantum systems. This algorithm can also be used to calculate ground states of a Hamiltonian and can be easily implemented by using Qiskit's [**QAOA**](https://qiskit.org/documentation/stubs/qiskit.algorithms.QAOA.html) application.
+**Quantum Approximate Optimization Algorithm (QAOA)** is another variational algorithm that has applications for solving combinatorial optimization problems on near-term quantum systems. This algorithm can also be used to calculate ground states of a Hamiltonian and can be easily implemented by using Qiskit's **QAOA** application.
 
 Let's solve the B=3 problem using QAOA:
 

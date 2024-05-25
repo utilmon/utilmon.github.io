@@ -39,6 +39,22 @@
       "endDate": "2022",
       "summary": "Imporved Photocathode lifetime with unconventional CVD activation methods and studied photoemission processes with various simulation methods",
       "highlights": ["Condensed Matter Physics", "Accelerator Physics"]
+    },
+    {
+      "name": "University of Rochester",
+      "position": "Research Assistant",
+      "startDate": "2014",
+      "endDate": "2016",
+      "summary": "Studied genetic optimization of ultra‑high Q‑factor GaAs L3 photonic crystal cavities and NV and SiV color centers in Nanodiamonds",
+      "highlights": ["Optics", "Condensed Matter Physics"]
+    },
+    {
+      "name": "The Korean National Police Agency",
+      "position": "Combat Police",
+      "startDate": "2011",
+      "endDate": "2013",
+      "summary": "Redesigned the parking lot system of the police station based on statistics",
+      "highlights": ["Statistical approach"]
     }
   ],
   // "volunteer": [
