@@ -7,3 +7,13 @@
 
 "Vision":
   color: "#009f36"
+
+"JAP":
+
+"AIP":
+  url: https://pubs.aip.org/aip/adv
+  color: "#50788d"
+
+"PRAB":
+  url: https://journals.aps.org/prab/
+  color: "#4a9a64"
