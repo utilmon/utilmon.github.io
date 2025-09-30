@@ -6,7 +6,7 @@ subtitle: Senior Engineer at <a href='https://www.linkedin.com/company/samsung-e
 
 profile:
   align: right
-  image: 2025_IMG_1415.jpg
+  image: 2025_IMG_1416.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>utilmonn@gmail.com</p>
