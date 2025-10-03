@@ -9,7 +9,7 @@ profile:
   image: 2025_IMG_1416.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>utilmonn@gmail.com</p>
+    <p>jaikwan.bae@gmail.com</p>
     <p>utilmon@github</p>
     <p>+1 (585) 967-8906</p>
 
