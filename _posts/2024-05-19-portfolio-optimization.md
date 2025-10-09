@@ -308,10 +308,8 @@ print(result2)
 The QAOA execution may take a few minutes to complete.
 
 ### Further Reading:
-
-For those who have successfully solved this introductory challenge, **congratulations!** <br> I hope you were able to learn something about optimizing portfolios and how you can use Qiskit's Finance module to solve the example problem. <br> If you are interested in further reading, here are a few resources to explore: <br>
+If you are interested in further reading, here are a few resources to explore: <br>
 
 1. [**Quantum optimization using variational algorithms on near-term quantum devices. Moll et al. 2017**](https://arxiv.org/abs/1710.01022)<br>
 2. [**Improving Variational Quantum Optimization using CVaR. Barkoutsos et al. 2019.**](https://arxiv.org/abs/1907.04769)<br>
 
-Let me know if you have any other questions! I tried to format the article as a personal blog post while removing mentions of the IBM challenge as requested. Please feel free to modify further as needed.
