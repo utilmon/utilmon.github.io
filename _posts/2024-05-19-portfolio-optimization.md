@@ -308,8 +308,8 @@ print(result2)
 The QAOA execution may take a few minutes to complete.
 
 ### Further Reading:
+
 If you are interested in further reading, here are a few resources to explore: <br>
 
 1. [**Quantum optimization using variational algorithms on near-term quantum devices. Moll et al. 2017**](https://arxiv.org/abs/1710.01022)<br>
 2. [**Improving Variational Quantum Optimization using CVaR. Barkoutsos et al. 2019.**](https://arxiv.org/abs/1907.04769)<br>
-
