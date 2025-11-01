@@ -550,7 +550,7 @@ ninja.data = [{
         title: 'LinkedIn',
         section: 'Socials',
         handler: () => {
-          window.open("https://www.linkedin.com/in/jai-kwan-bae", "_blank");
+          window.open("https://www.linkedin.com/in/jay-kwan-bae", "_blank");
         },
       },{
         id: 'social-scholar',
