@@ -20,6 +20,12 @@ social: true # includes social icons at the bottom of the page
 
 Hi 👋
 
-I am a physicist with experience in modeling and simulating complex systems and phenomena for photoemission processes. In particular, I have worked on Partial Differential Equations such as the Boltzmann equation, Monte Carlo simulation, Density Functional Theory calculations, and machine learning. I hope to use my knowledge of Physics, Math, and numerical and computational methods in defining and developing new computational tools to aid research.
+I’m a computational physicist specializing in modeling complex systems (PDEs, Monte Carlo, ML) and computer vision with experience in developing and deploying high-Sharpe-ratio strategies, seeking a quantitative researcher role to discover and model new market alphas.
 
-My skills include Python and C programming, using computing clusters. I have also used quantum computing libraries to solve various optimization and machine learning problems.
+Highlights of my career:
+-	Developed and deployed high Sharpe ratio (~2.0) market neutral strategies using CoT report data.
+-	Authored and maintain an open-source Python project (+100 stars) for the Interactive Brokers API, supporting stock and option trading.
+-	Developed a computer vision ML solution to classify wafer map failure patterns reducing reporting cycle time by over 80%
+-	Developed an ML surrogate model for electron beam simulation, achieving a 1000x speedup over the traditional process with 98% accuracy.
+-	Predicted unconventional correlation between electron beam properties and laser intensity used for photoemission using Monte Carlo methods and Boltzmann equations (+200 citations).
+
