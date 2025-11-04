@@ -26,7 +26,7 @@ Highlights of my career:
 
 - Developed and deployed high Sharpe ratio (~2.0) market neutral strategies using CoT report data.
 
-- Authored and maintain an open-source Python project (+100 stars) for the Interactive Brokers API, supporting stock and option trading.
+- Authored and maintain an open-source Python project (+100 stars) for the Interactive Brokers API, supporting stock and options trading.
 
 - Developed a computer vision ML solution to classify wafer map failure patterns reducing reporting cycle time by over 80%
 
