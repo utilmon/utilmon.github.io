@@ -24,7 +24,7 @@ I’m a computational physicist specializing in modeling complex systems (PDEs, 
 
 Highlights of my career:
 
-- Developed and deployed high Sharpe ratio (~2.0) market neutral strategies using CoT report data.
+- Developed and deployed live market-neutral crypto strategies leveraging CFTC Commitments of Traders (CoT) data to extract sentiment-based alpha, achieving a 2.1 Sharpe ratio over the last 7 months.
 
 - Authored and maintain an open-source Python project (+100 stars) for the Interactive Brokers API, supporting stock and options trading.
 
