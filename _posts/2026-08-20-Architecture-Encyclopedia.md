@@ -22,13 +22,9 @@ This API client is **not offered to the public** and does not provide third-part
 
 The application uses the **YouTube Data API v3** and Google OAuth 2.0 to authorize the owner's Google account and upload videos to the owner's channel.
 
-<a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
-  <img
-    src="{{ '/assets/img/developed-with-youtube-sentence-case-light.png' | relative_url }}"
-    alt="Developed with YouTube"
-    width="240"
-  >
-</a>
+{% include figure.liquid loading="eager" path="assets/img/developed-with-youtube-sentence-case-light.png" class="img-fluid rounded z-depth-1" %}
+
+[Developed with YouTube](https://www.youtube.com/)
 
 The operator provides the video file and upload metadata, including:
 
