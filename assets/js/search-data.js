@@ -30,11 +30,33 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-architecture-encyclopedia",
+        },{id: "post-terms-of-service-architectureencyclopedia-creator-upload-automation",
+        
+          title: "Terms of Service — ArchitectureEncyclopedia Creator Upload Automation",
+        
+        description: "Terms of Service for the ArchitectureEncyclopedia Creator Upload Automation API client.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/Architecture-Encyclopedia-Terms-of-Service/";
+          
+        },
+      },{id: "post-privacy-policy-architectureencyclopedia-creator-upload-automation",
+        
+          title: "Privacy Policy — ArchitectureEncyclopedia Creator Upload Automation",
+        
+        description: "Privacy Policy for the ArchitectureEncyclopedia Creator Upload Automation API client.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/Architecture-Encyclopedia-Privacy-Policy/";
+          
+        },
+      },{id: "post-architecture-encyclopedia",
         
           title: "Architecture Encyclopedia",
         
-        description: "Creator Upload Automation",
+        description: "Public documentation for the ArchitectureEncyclopedia Creator Upload Automation API client.",
         section: "Posts",
         handler: () => {
           
