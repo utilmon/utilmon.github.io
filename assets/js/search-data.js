@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-cannes-2024-poster",
+        },{id: "post-architecture-encyclopedia",
+        
+          title: "Architecture Encyclopedia",
+        
+        description: "Creator Upload Automation",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/Architecture-Encyclopedia/";
+          
+        },
+      },{id: "post-cannes-2024-poster",
         
           title: "Cannes 2024 poster",
         
