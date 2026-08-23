@@ -24,7 +24,7 @@ The application uses the **YouTube Data API v3** and Google OAuth 2.0 to authori
 
 <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
   <img
-    src="https://developers.google.com/static/youtube/images/developed-with-youtube-sentence-case-dark.png"
+    src="{{ '/assets/img/developed-with-youtube-sentence-case-light.png' | relative_url }}"
     alt="Developed with YouTube"
     width="240"
   >
